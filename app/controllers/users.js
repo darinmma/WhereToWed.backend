@@ -10,7 +10,7 @@ module.exports = {
 function create(req, res, next){
   var user = new User(req.body)
 
-  venue.save(function(err, savedUser){
+  user.save(function(err, savedUser){
     if(err) next(err)
 
     res.json(savedUser)

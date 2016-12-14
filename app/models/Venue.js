@@ -10,13 +10,13 @@ var venueSchema = new mongoose.Schema({
   minPrice: Number,
   maxPrice: Number,
   outsideVendor: Boolean,
-  password_digest: String,
   location: {
     street: String,
     city: String,
     state: String,
     zipCode: Number
-  }
+  },
+  owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 });
 
 var Venue = mongoose.model('Venue', venueSchema);

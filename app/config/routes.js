@@ -3,6 +3,7 @@ var router = express.Router();
 var venuesController = require('../controllers/venues')
 var usersController =
 require('../controllers/users')
+var token = require('./token_auth')
 
 //api homepage
 router.get('/', function(req, res, next) {
@@ -12,20 +13,24 @@ router.get('/', function(req, res, next) {
 //venue routes
 router.route('/api/venues')
   .get(venuesController.index)
-  .post(venuesController.create)
+  .post(token.authenticate, venuesController.create)
 
 router.route('/api/venues/:id')
   .get(venuesController.show)
-  .patch(venuesController.update)
-  .delete(venuesController.destroy)
+  .patch(token.authenticate, venuesController.update)
+  .delete(token.authenticate, venuesController.destroy)
 
 //user routes
 router.route('/api/users')
   .post(usersController.create)
 
 router.route('/api/users/:id')
-  .get(usersController.show)
-  .patch(usersController.update)
-  .delete(usersController.destroy)
+  .get(token.authenticate, usersController.show)
+  .patch(token.authenticate, usersController.update)
+  .delete(token.authenticate, usersController.destroy)
+
+//signin token routes
+router.route('/api/token')
+  .post(token.create)
 
 module.exports = router

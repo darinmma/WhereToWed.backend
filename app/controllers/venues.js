@@ -18,6 +18,7 @@ function index(req, res, next) {
 
 function create(req, res, next) {
   var venue = new Venue(req.body);
+  venue.owner = req.decoded._id
 
   venue.save(function(err, savedVenue){
     if(err) next(err)
@@ -37,8 +38,9 @@ function show(req, res, next) {
 
 function update(req, res, next) {
   var id = req.params.id;
-
   Venue.findById(id, function(err, venue){
+    //this line is to verify that user logged in has rights to update
+    // req.decoded._id == venue.owner
     venue.name = req.body.name;
     venue.contact = req.body.contact;
     venue.contactEmail = req.body.contactEmail;
