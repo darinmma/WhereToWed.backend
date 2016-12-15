@@ -1,10 +1,19 @@
 var User = require('../models/User')
 
 module.exports = {
+  index: index,
   create: create,
   show: show,
   update: update,
   destroy: destroy
+}
+
+function index(req, res, next) {
+  User.find({}, function(err, users){
+    if(err) next(err)
+
+    res.json(users)
+  }).select('-__v')
 }
 
 function create(req, res, next){

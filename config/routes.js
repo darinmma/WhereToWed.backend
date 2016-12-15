@@ -22,6 +22,7 @@ router.route('/api/venues/:id')
 
 //user routes
 router.route('/api/users')
+  .get(usersController.index)
   .post(usersController.create)
 
 router.route('/api/users/:id')
